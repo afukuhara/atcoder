@@ -8,7 +8,7 @@ fn main() {
     };
 
     let mut cards = HashSet::new();
-    for i in vec![a, b, c, d] {
+    for i in [a, b, c, d] {
         cards.insert(i);
     }
 
