@@ -46,6 +46,34 @@ cases:
       read
     out: |
       No
+  - name: mytest1
+    in: |
+      1
+      abcde
+      abc
+    out: |
+      No
+  - name: mytest2
+    in: |
+      1
+      abc
+      abcde
+    out: |
+      No
+  - name: mytest3
+    in: |
+      1
+      abc
+      abcd
+    out: |
+      Yes
+  - name: mytest4
+    in: |
+      1
+      abcd
+      abc
+    out: |
+      Yes
 
 extend:
   - type: Text
