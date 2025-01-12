@@ -97,4 +97,3 @@ fn remove_houses(
     }
     count
 }
-
