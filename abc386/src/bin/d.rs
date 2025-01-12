@@ -1,26 +1,31 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
+use std::collections::BTreeSet;
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: u32, m: u32,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut cells: BTreeSet<(u32, u32, char)> = BTreeSet::new();
+
+    for _i in 0..m {
+        input! {
+            x: u32, y: u32, c: char,
+        };
+
+        cells.insert((x, y, c));
+    }
+
+    let mut min_y = n + 1;
+    for (_, y, c) in cells {
+        if c == 'W' {
+            min_y = min_y.min(y);
+        } else if min_y <= y {
+            println!("No");
+            return;
+        }
+    }
+
+    println!("Yes");
 }
