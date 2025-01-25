@@ -19,7 +19,16 @@ cases:
       252509054433933519 760713016476190692
     out: |
       221852052834757
-
+  - name: mycase1
+    in: |
+      200 210
+    out: |
+      3
+  - name: mycase2
+    in: |
+      10 11
+    out: |
+      0
 extend:
   - type: Text
     path: "./c"
