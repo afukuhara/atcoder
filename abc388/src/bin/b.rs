@@ -1,26 +1,23 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: u32, d: u32,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut snakes = vec![];
+    for _i in 0..n {
+        input! { t: u32, l: u32 }
+        snakes.push((t, l));
+    }
+
+    for i in 1..=d {
+        let result = heaviest_snake(&snakes, i);
+        println!("{}", result);
+    }
+}
+
+fn heaviest_snake(snakes: &[(u32, u32)], n: u32) -> u32 {
+    snakes.iter().map(|(t, l)| t * (l + n)).max().unwrap()
 }
