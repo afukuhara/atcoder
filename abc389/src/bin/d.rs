@@ -1,26 +1,30 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        r: u64
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    // in 関数 (クロージャ) の定義
+    let in_circle = |a: u64, b: u64| -> bool {
+        (2 * a + 1) * (2 * a + 1) + (2 * b + 1) * (2 * b + 1) <= 4 * r * r
+    };
+
+    let mut cnt: u64 = 0;
+    let mut up = r - 1;
+    let mut res = (r - 1) * 4 + 1;
+
+    let mut x = 1;
+    while in_circle(x, 1) {
+        // 条件を満たすまで up を減少させる
+        while !in_circle(x, up) {
+            up -= 1;
+        }
+        cnt += up;
+        x += 1;
+    }
+
+    res += cnt * 4;
+    println!("{}", res);
 }
