@@ -26,7 +26,22 @@ cases:
       #
     out: |
       Yes
-
+  - name: my_sample1
+    in: |
+      3 3
+      ?..
+      ..#
+      ..?
+    out: |
+      Yes
+  - name: my_sample2
+    in: |
+      3 1
+      #
+      .
+      #
+    out: |
+      No
 extend:
   - type: Text
     path: "./c"
