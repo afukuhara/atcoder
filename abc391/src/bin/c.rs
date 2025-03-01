@@ -1,26 +1,55 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
+use std::collections::HashMap;
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: usize, q: usize,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut pigeons = HashMap::new();
+    let mut nests = HashMap::new();
+
+    for i in 1..n + 1 {
+        pigeons.entry(i).or_insert(i);
+    }
+
+    let mut multi_counts = 0;
+
+    for _ in 0..q {
+        input! {
+            q: usize,
+        }
+
+        match q {
+            1 => {
+                input! {
+                    p: usize, h: usize,
+                }
+
+                let nest = pigeons.get_mut(&p).unwrap();
+
+                let prev_nest_pigeon_count = *nests.entry(*nest).or_insert(1);
+                if prev_nest_pigeon_count == 2 {
+                    multi_counts -= 1;
+                }
+
+                let next_nest_pigeon_count = *nests.entry(h).or_insert(1);
+                if next_nest_pigeon_count == 1 {
+                    multi_counts += 1;
+                }
+
+                *nests.entry(h).or_insert(0) += 1;
+                *nests.entry(*nest).or_insert(0) -= 1;
+
+                *pigeons.entry(p).or_insert(0) = h;
+            }
+            2 => {
+                println!("{}", multi_counts);
+            }
+            _ => {
+                unreachable!();
+            }
+        }
+    }
 }
