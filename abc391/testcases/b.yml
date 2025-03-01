@@ -22,7 +22,35 @@ cases:
       .
     out: |
       1 2
-
+  - name: my_sample1
+    in: |
+      4 2
+      ##.#
+      #..#
+      ###.
+      ####
+      .#
+      #.
+    out: |
+      2 3
+  - name: my_sample2
+    in: |
+      1 1
+      #
+      #
+    out: |
+      1 1
+  - name: my_sample3
+    in: |
+      4 2
+      ##.#
+      .#.#
+      ###.
+      ####
+      .#
+      #.
+    out: |
+      2 3
 extend:
   - type: Text
     path: "./b"
