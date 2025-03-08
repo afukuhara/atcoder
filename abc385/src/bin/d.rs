@@ -97,3 +97,14 @@ fn remove_houses(
     }
     count
 }
+
+fn dfs(
+    idx: usize,
+    group_count: usize,
+    stone_bags: &Vec<usize>,
+    bag_groups: &mut Vec<usize>,
+    xor_result: &mut usize,
+    answers: &mut HashSet<usize>,
+) {
+    // Function implementation...
+}
