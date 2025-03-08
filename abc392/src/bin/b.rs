@@ -1,26 +1,29 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use itertools::Itertools;
+use proconio::{fastout, input};
+use std::collections::HashSet;
 
 #[fastout]
 fn main() {
-    input!{
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+    input! {
+        n: usize, m: usize,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut a_set = HashSet::new();
+    for _ in 0..m {
+        input! {
+            a: usize,
+        }
+
+        a_set.insert(a);
+    }
+
+    let mut ans = vec![];
+    for i in 1..=n {
+        if !a_set.contains(&i) {
+            ans.push(i);
+        }
+    }
+
+    println!("{}", ans.len());
+    println!("{}", ans.iter().join(" "));
 }
