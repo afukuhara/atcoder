@@ -17,10 +17,17 @@ use std::iter::FromIterator;
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        s1: String,
+        s2: String,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let s1 = s1.as_str();
+    let s2 = s2.as_str();
+    match (s1, s2) {
+        ("sick", "sick") => println!("1"),
+        ("sick", "fine") => println!("2"),
+        ("fine", "sick") => println!("3"),
+        ("fine", "fine") => println!("4"),
+        _ => unreachable!(),
+    }
 }
