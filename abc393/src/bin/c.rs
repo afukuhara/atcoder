@@ -1,26 +1,27 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
+use proconio::{fastout, input};
 use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use std::collections::HashSet;
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        _n: usize, m: usize,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut count = 0;
+    let mut graph = HashSet::new();
+    for _ in 0..m {
+        input! {
+            u: usize, v: usize,
+        }
+
+        let branch = (min(u, v), max(u, v));
+        if graph.contains(&branch) || u == v {
+            count += 1;
+        }
+
+        graph.insert(branch);
+    }
+
+    println!("{}", count);
 }
