@@ -17,10 +17,26 @@ use std::iter::FromIterator;
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        s: String,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let chars = s.chars().collect::<Vec<_>>();
+
+    let mut count = 0;
+    for step in 1..(chars.len() - 1) {
+        for offset in 0..step {
+            let subseq = chars.iter().skip(offset).step_by(step);
+
+            if subseq.len() < 3 {
+                continue;
+            }
+
+            for k in 0..subseq.len() {
+                if subseq.clone().skip(k).take(3).eq(&['A', 'B', 'C']) {
+                    count += 1;
+                }
+            }
+        }
+    }
+    println!("{}", count);
 }
