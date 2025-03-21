@@ -1,26 +1,33 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
+use std::cmp::min;
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        _n: usize
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    input! {
+        s: String
+    };
+
+    let s: Vec<char> = s.chars().collect();
+    let total_block_count = s.iter().filter(|&c| *c == '1').count();
+
+    let mut now = 0;
+    let mut answer = 0;
+
+    for char in s.iter() {
+        match char {
+            '0' => {
+                answer += min(now, total_block_count - now);
+            }
+            '1' => {
+                now += 1;
+            }
+            _ => unreachable!(),
+        }
+    }
+
+    println!("{}", answer);
 }
