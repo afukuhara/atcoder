@@ -17,10 +17,43 @@ use std::iter::FromIterator;
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        s: String,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut begin_stack = Vec::new();
+    let mut end_stack = Vec::new();
+
+    for char in s.chars() {
+        if char == '(' || char == '[' || char == '<' {
+            begin_stack.push(char);
+        } else {
+            end_stack.push(char);
+
+            if begin_stack.is_empty() {
+                continue;
+            }
+
+            let begin = begin_stack.pop().unwrap();
+            let end = end_stack.pop().unwrap();
+
+            if !pair_parentheses(begin, end) {
+                begin_stack.push(begin);
+                end_stack.push(end);
+                break;
+            }
+        }
+    }
+
+    println!(
+        "{}",
+        if begin_stack.is_empty() && end_stack.is_empty() {
+            "Yes"
+        } else {
+            "No"
+        }
+    );
+}
+
+fn pair_parentheses(first: char, second: char) -> bool {
+    matches!((first, second), ('(', ')') | ('[', ']') | ('<', '>'))
 }
