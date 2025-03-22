@@ -19,7 +19,26 @@ cases:
       WWWWW
     out: |
       WWWWW
-
+  - name: sample4
+    in: |
+      WWAWWA
+    out: |
+      ACCACC
+  - name: sample5
+    in: |
+      WWWWWA
+    out: |
+      ACCCCC
+  - name: sample6
+    in: |
+      WAWAWA
+    out: |
+      ACACAC
+  - name: sample7
+    in: |
+      WXWAWA
+    out: |
+      WXACAC
 extend:
   - type: Text
     path: "./c"
