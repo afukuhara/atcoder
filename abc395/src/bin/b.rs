@@ -1,26 +1,36 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use itertools::Itertools;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: usize,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut chars = vec![vec!['#'; n]; n];
+
+    let mut width: i32 = n as i32 - 2;
+    let mut offset: i32 = 1;
+
+    while width > 0 {
+        draw_square(&mut chars, width as usize, offset as usize);
+        width -= 4;
+        offset += 2;
+    }
+
+    for line in chars.iter_mut() {
+        println!("{}", line.iter().join(""));
+    }
+}
+
+fn draw_square(chars: &mut [Vec<char>], size: usize, offset: usize) {
+    for y in 0..size {
+        chars[y + offset][offset] = '.';
+        chars[y + offset][offset + size - 1] = '.';
+    }
+
+    for x in 0..size {
+        chars[offset][x + offset] = '.';
+        chars[offset + size - 1][x + offset] = '.';
+    }
 }
