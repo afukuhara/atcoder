@@ -1,26 +1,57 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
-    };
+        n: usize,
+        q: usize,
+    }
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut box_to_label = (0..n).collect::<Vec<_>>();
+    let mut label_to_box = (0..n).collect::<Vec<_>>();
+    let mut pigeon_to_box = (0..n).collect::<Vec<_>>();
+
+    for _ in 0..q {
+        input! {
+            query: usize,
+        }
+
+        match query {
+            1 => {
+                input! {
+                    pigeon: usize,
+                    to: usize,
+                }
+
+                pigeon_to_box[pigeon - 1] = label_to_box[to - 1];
+            }
+            2 => {
+                input! {
+                    label0: usize,
+                    label1: usize,
+                }
+
+                let label0 = label0 - 1;
+                let label1 = label1 - 1;
+
+                label_to_box.swap(label0, label1);
+
+                let box0 = label_to_box[label0];
+                let box1 = label_to_box[label1];
+                box_to_label.swap(box0, box1);
+            }
+            3 => {
+                input! {
+                    pigeon: usize,
+                }
+
+                let pigeon = pigeon - 1;
+                let box_id = pigeon_to_box[pigeon];
+                let label = box_to_label[box_id];
+
+                println!("{}", label + 1);
+            }
+            _ => unreachable!(),
+        }
+    }
 }
