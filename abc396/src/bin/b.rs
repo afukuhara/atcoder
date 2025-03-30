@@ -8,7 +8,7 @@ fn main() {
 
     let mut stack = vec![0; 100];
 
-    for i in 0..n {
+    for _ in 0..n {
         input! {
             op: usize,
         }
