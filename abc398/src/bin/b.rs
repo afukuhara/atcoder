@@ -1,26 +1,24 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use itertools::Itertools;
+use proconio::{fastout, input};
+use std::collections::HashMap;
 
 #[fastout]
 fn main() {
-    input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+    let mut cards = HashMap::new();
+
+    for _ in 0..7 {
+        input! {
+            c: usize,
+        };
+
+        let count = cards.entry(c).or_insert(0);
+        *count += 1;
+    }
+
+    let answer = match cards.values().sorted().rev().take(2).collect_tuple() {
+        Some((top, second)) if top >= &3 && second >= &2 => "Yes",
+        _ => "No",
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    println!("{}", answer);
 }
