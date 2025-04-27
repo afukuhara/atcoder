@@ -1,26 +1,38 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
+use std::collections::{HashMap, HashSet};
 
 #[fastout]
 fn main() {
-    input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
-    };
+    input! {        n: usize   };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut only_ones = HashSet::new();
+    let mut more_than_two = HashSet::new();
+    let mut people = HashMap::new();
+
+    for i in 0..n {
+        input! {
+            a: usize,
+        }
+
+        if more_than_two.contains(&a) {
+            continue;
+        }
+
+        if only_ones.contains(&a) {
+            only_ones.remove(&a);
+            more_than_two.insert(a);
+            continue;
+        }
+
+        only_ones.insert(a);
+        people.insert(a, i + 1);
+    }
+
+    let ans = only_ones.iter().max().unwrap_or(&0);
+
+    if ans == &0 {
+        println!("-1");
+    } else {
+        println!("{}", people[ans]);
+    }
 }
