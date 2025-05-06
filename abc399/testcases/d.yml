@@ -17,7 +17,20 @@ cases:
       1
       0
       4
-
+  - name: sample2
+    in: |
+      1
+      5
+      1 2 3 3 4 4 5 2 1 5
+    out: |
+      1
+  - name: sample2
+    in: |
+      1
+      2
+      1 2 1 2
+    out: |
+      1
 extend:
   - type: Text
     path: "./d"
