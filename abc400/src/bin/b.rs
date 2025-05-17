@@ -1,26 +1,24 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
+use proconio::{fastout, input};
 use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: i64, m: u32,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut ans: i64 = 0;
+    for i in 0..=m {
+        ans += n.pow(i);
+        if ans > 1_000_000_000 {
+            ans = -1;
+            break;
+        }
+    }
+
+    if ans == -1 {
+        println!("{}", "inf");
+    } else {
+        println!("{}", ans);
+    }
 }
