@@ -1,5 +1,4 @@
 use proconio::{fastout, input};
-use num_traits::pow;
 
 #[fastout]
 fn main() {

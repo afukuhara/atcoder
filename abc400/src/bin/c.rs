@@ -1,26 +1,22 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: u128,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut a: i32 = 60;
+    let mut res: u128 = 0;
+    let mut b: u128 = 1;
+
+    while a > 0 {
+        while a > 0 && (2u128.pow(a as u32) * b * b > n) {
+            a -= 1;
+        }
+        res += a as u128;
+        b += 2;
+    }
+
+    println!("{}", res);
 }
