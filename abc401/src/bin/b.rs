@@ -1,26 +1,26 @@
 #[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: usize
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut ans = 0;
+    let mut is_logged_in = false;
+    for _ in 1..=n {
+        input! {
+            s: String,
+        };
+
+        match s.as_str() {
+            "login" => is_logged_in = true,
+            "logout" => is_logged_in = false,
+            "private" if is_logged_in => ans += 1,
+            _ => {}
+        }
+    }
+
+    println!("{}", ans);
 }
