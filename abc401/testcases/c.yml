@@ -19,7 +19,11 @@ cases:
       1000000 500000
     out: |
       420890625
-
+  - name: sample4
+    in: |
+      10 10
+    out: |
+      10
 extend:
   - type: Text
     path: "./c"
