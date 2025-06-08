@@ -8,7 +8,7 @@ fn main() {
 
     let upper_chars = s.chars().filter(|c| c.is_uppercase()).collect::<String>();
 
-    if upper_chars.len() > 0 {
+    if !upper_chars.is_empty() {
         println!("{}", upper_chars);
     }
 }
