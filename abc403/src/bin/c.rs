@@ -1,26 +1,47 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
+use std::collections::{HashMap, HashSet};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        _n: usize,
+        _m: usize,
+        q: usize,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut permissions: HashMap<usize, HashSet<isize>> = HashMap::new();
+    for _ in 0..q {
+        input! {
+            query: usize,
+        };
+
+        match query {
+            1 => {
+                input! {
+                    x: usize,
+                    y: isize,
+                };
+                permissions.entry(x).or_default().insert(y);
+            }
+            2 => {
+                input! {
+                    x: usize,
+                };
+                permissions.entry(x).or_default().insert(-1);
+            }
+            3 => {
+                input! {
+                    x: usize,
+                    y: isize,
+                };
+                let user_permissions = permissions.entry(x).or_default();
+                if user_permissions.contains(&y) || user_permissions.contains(&-1) {
+                    println!("Yes");
+                } else {
+                    println!("No");
+                }
+            }
+            _ => unreachable!(),
+        }
+    }
 }
