@@ -1,26 +1,28 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
+use std::collections::HashMap;
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: usize, m: usize,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut line_mods = HashMap::new();
+
+    for _ in 0..m {
+        input! {
+            a: usize, b: usize,
+        };
+
+        let mod_value = (a + b) % n;
+        *line_mods.entry(mod_value).or_insert(0) += 1;
+    }
+
+    let line_mods_sum = line_mods
+        .into_values()
+        .map(|v| v * (v - 1) / 2)
+        .sum::<usize>();
+
+    let total_line_combination = m * (m - 1) / 2;
+    println!("{}", total_line_combination - line_mods_sum);
 }
