@@ -48,7 +48,19 @@ cases:
       ..##..###..#.
     out: |
       5
-
+  - name: sample1
+    in: |
+      4
+      ###.
+      ..#.
+      ..#.
+      ..#.
+      ###.
+      ..#.
+      ..#.
+      ..#.
+    out: |
+      0
 extend:
   - type: Text
     path: "./b"
