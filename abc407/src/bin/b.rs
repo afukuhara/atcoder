@@ -1,26 +1,22 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        x: isize, y: isize,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut two_dice = vec![];
+    for i in 1..=6 {
+        for j in 1..=6 {
+            two_dice.push((i, j));
+        }
+    }
+
+    let count = two_dice
+        .iter()
+        .filter(|(a, b)| a + b >= x || (a - b).abs() >= y)
+        .count();
+
+    println!("{}", count as f64 / 36.0);
 }
