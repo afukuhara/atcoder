@@ -1,26 +1,30 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: usize, m: usize,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut walls = vec![0; n];
+
+    for _ in 0..m {
+        input! {
+            l: usize, r: usize,
+        };
+
+        walls[l - 1] += 1;
+        if r < n {
+            walls[r] -= 1;
+        }
+    }
+
+    let mut block = 0;
+    let mut block_min = 1000000000;
+    for wall in walls {
+        block += wall;
+        block_min = block_min.min(block);
+    }
+
+    println!("{}", block_min);
 }
