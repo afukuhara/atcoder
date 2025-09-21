@@ -16,6 +16,13 @@ cases:
       1 6 2 10 2 3 2
     out: |
       3
+  - name: my_sample1
+    in: |
+      8
+      1 6 2 10 2 5 2 9
+    out: |
+      4
+
 
 extend:
   - type: Text
