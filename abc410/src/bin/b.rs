@@ -1,26 +1,34 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use itertools::Itertools;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: usize, q: usize,
+        x: [usize; q],
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut boxes = vec![0; n];
+    let mut balls = vec![0; q];
+
+    for (i, x) in x.iter().enumerate() {
+        match x {
+            0 => {
+                let minimum = boxes.iter().min().unwrap();
+                for (j, b) in boxes.iter().enumerate() {
+                    if b == minimum {
+                        boxes[j] += 1;
+                        balls[i] = j;
+                        break;
+                    }
+                }
+            }
+            _ => {
+                boxes[x - 1] += 1;
+                balls[i] = x - 1;
+            }
+        }
+    }
+
+    println!("{}", balls.iter().map(|x| x + 1).join(" "));
 }
