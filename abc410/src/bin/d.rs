@@ -1,26 +1,48 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
 use proconio::{
     fastout, input,
-    marker::{Chars, Usize1},
+    marker::Usize1,
 };
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use std::collections::VecDeque;
+
+const W: usize = 1 << 10;
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: usize, m: usize,
+        edges: [(Usize1, Usize1, usize); m],
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut graph = vec![Vec::<(usize, usize)>::new(); n];
+    for (a, b, w) in edges {
+        graph[a].push((b, w));
+    }
+
+    let mut visited = vec![false; n * W];
+    let mut queue = VecDeque::new();
+
+    push(0, 0, &mut visited, &mut queue);
+
+    while let Some(id) = queue.pop_front() {
+        let (v, x) = (id / W, id % W);
+        for &(to, w) in &graph[v] {
+            push(to, x ^ w, &mut visited, &mut queue);
+        }
+    }
+
+    for x in 0..W {
+        if visited[(n - 1) * W + x] {
+            println!("{}", x);
+            return;
+        }
+    }
+    println!("-1");
+}
+
+fn push(v: usize, x: usize, visited: &mut [bool], q: &mut VecDeque<usize>) {
+    let id = v * W + x;
+    if !visited[id] {
+        visited[id] = true;
+        q.push_back(id);
+    }
 }
