@@ -1,26 +1,40 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
+use std::collections::VecDeque;
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        q: usize
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut stack = VecDeque::new();
+    for _ in 0..q {
+        input! { t: usize };
+
+        match t {
+            1 => {
+                input! { count: usize, x: usize  };
+                stack.push_back((count, x));
+            }
+            2 => {
+                input! { mut k: usize  };
+
+                let mut answer = 0;
+                while k > 0 {
+                    let (count, x) = stack.pop_front().unwrap_or((0, 0));
+                    if count > k {
+                        stack.push_front((count - k, x));
+                        answer += x * k;
+                        k = 0;
+                    } else {
+                        answer += x * count;
+                        k -= count;
+                    }
+                }
+
+                println!("{}", answer);
+            }
+            _ => unreachable!(),
+        }
+    }
 }
