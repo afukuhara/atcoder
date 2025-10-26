@@ -1,26 +1,47 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        t: usize
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    for _ in 0..t {
+        input! {
+            n: usize, mut a: [i128; n]
+        }
+
+        // 全部同じ値
+        if a.iter().all(|&x| x == a[0]) {
+            println!("Yes");
+            continue;
+        }
+
+        // 先頭とその -1 倍しかなく、それぞれ ceil(N/2) 個と floor(N/2) 個
+        if a.iter().all(|&x| x == a[0] || x == -a[0]) {
+            let p = a.iter().filter(|&x| *x == a[0]).count();
+            let ncnt = a.len() - p;
+            if p + ncnt == n && p.min(ncnt) == n / 2 {
+                println!("Yes");
+                continue;
+            }
+        }
+
+        a.sort_by_key(|&x| x.abs());
+
+        let r_num = a[1];
+        let r_den = a[0];
+
+        let mut ok = true;
+        for i in 1..n {
+            let lhs = a[i] * r_den;
+            let rhs = a[i - 1] * r_num;
+            if lhs != rhs {
+                ok = false;
+                break;
+            }
+        }
+
+        println!("{}", if ok { "Yes" } else { "No" });
+    }
 }
