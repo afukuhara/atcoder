@@ -1,26 +1,24 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: usize,
+        s: [(char, u128); n],
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut answer = String::new();
+    let mut total = 0;
+    for (c, x) in s {
+        total += x;
+
+        if total > 100 {
+            println!("Too Long");
+            return;
+        }
+
+        answer.push_str(&c.to_string().repeat(x as usize));
+    }
+
+    println!("{}", answer);
 }
