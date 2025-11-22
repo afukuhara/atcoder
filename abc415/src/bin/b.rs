@@ -1,26 +1,30 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        s: String,
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    // 自分のコード
+    // let mut inventories = vec![];
+    // for (i, c) in s.chars().enumerate() {
+    //     if c == '#' {
+    //         inventories.push(i + 1);
+    //     }
+    // }
+
+    // for i in inventories.chunks(2) {
+    //     println!("{},{}", i[0], i[1]);
+    // }
+
+    for i in s
+        .chars()
+        .enumerate()
+        .filter_map(|(i, c)| (c == '#').then_some(i + 1))
+        .collect::<Vec<_>>()
+        .chunks(2)
+    {
+        println!("{},{}", i[0], i[1]);
+    }
 }
