@@ -1,26 +1,24 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
+use std::cmp::max;
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: usize, max_weight: usize,
+        items: [(usize, u128); n],
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut dp = vec![vec![0; max_weight + 1]; n + 1];
+    for i in 1..=n {
+        for w in 1..=max_weight {
+            let (weight, value) = items[i - 1];
+            if w < weight {
+                dp[i][w] = dp[i - 1][w];
+            } else {
+                dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - weight] + value);
+            }
+        }
+    }
+
+    println!("{}", dp[n][max_weight]);
 }
