@@ -41,4 +41,3 @@ fn main() {
 
     println!("{}", ans.iter().rev().collect::<String>());
 }
-a
