@@ -1,26 +1,34 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
         h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        matrix: [String; h],
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut dp = vec![vec![0; w]; h];
+    dp[0][0] = 1;
+    let divider = 1_000__000_000 + 7;
+
+    for (i, line) in matrix.iter().enumerate() {
+        for (j, column) in line.chars().enumerate() {
+            if column == '#' {
+                continue;
+            }
+
+            if i != 0 {
+                dp[i][j] += dp[i - 1][j];
+            }
+            if j != 0 {
+                dp[i][j] += dp[i][j - 1];
+            }
+
+            dp[i][j] %= divider;
+        }
+    }
+
+    println!("{:?}", dp[h - 1][w - 1]);
 }
+
+
