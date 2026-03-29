@@ -1,26 +1,26 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+        n: usize,
+        matrix: [[usize; n]; n],
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    const MOD: usize = 1_000_000_007;
+    let pattern = 1 << n;
+    let mut dp = vec![0; pattern];
+    dp[0] = 1;
+
+    for s in 0..(pattern - 1) {
+        let i = s.count_ones() as usize;
+        for j in 0..n {
+            if matrix[i][j] == 1 && ((s >> j) & 1 == 0) {
+                let next = s | (1 << j);
+                dp[next] = (dp[next] + dp[s]) % MOD;
+            }
+        }
+    }
+
+    println!("{}", dp[pattern - 1]);
 }
