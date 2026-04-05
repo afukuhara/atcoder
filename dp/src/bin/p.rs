@@ -7,43 +7,31 @@ fn main() {
         mut edges: [(Usize1, Usize1); n-1]
     };
 
-    const MOD: usize = 1_000_000_007;
     let mut graph = vec![vec![]; n];
     for (a, b) in edges {
         graph[a].push(b);
         graph[b].push(a);
     }
 
-    let mut dp_white = vec![0; n];
-    let mut dp_black = vec![0; n];
-    let (white, black) = dfs(0, 0, &graph, &mut dp_white, &mut dp_black, MOD);
+    let (white, black) = dfs(0, n, &graph);
 
     println!("{}", (white + black) % MOD);
 }
 
-fn dfs(
-    v: usize,
-    parent: usize,
-    graph: &[Vec<usize>],
-    dp_white: &mut [usize],
-    dp_black: &mut [usize],
-    divider: usize,
-) -> (usize, usize) {
-    if dp_white[v] != 0 && dp_black[v] != 0 {
-        return (dp_white[v], dp_black[v]);
-    }
-
+const MOD: usize = 1_000_000_007;
+fn dfs(v: usize, parent: usize, graph: &[Vec<usize>]) -> (usize, usize) {
     let mut white = 1;
     let mut black = 1;
 
     for &nv in graph[v].iter().filter(|&nv| *nv != parent) {
-        let (nw, nb) = dfs(nv, v, graph, dp_white, dp_black, divider);
-        white = (white * (nw + nb)) % divider;
-        black = (black * nw) % divider;
-    }
+        let (nw, nb) = dfs(nv, v, graph);
 
-    dp_white[v] = white;
-    dp_black[v] = black;
+        // v が白なら子は白黒どちらでもよい
+        white = (white * (nw + nb)) % MOD;
+
+        // v が黒なら子は白のみ
+        black = (black * nw) % MOD;
+    }
 
     (white, black)
 }
