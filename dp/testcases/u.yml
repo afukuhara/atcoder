@@ -49,7 +49,12 @@ cases:
       7 9 9 1 3 2 -5 8 7 -6 3 0 1 -8 -9 0
     out: |
       132
-
+  - name: sample2
+    in: |
+      1
+      0
+    out: |
+      0
 extend:
   - type: Text
     path: "./u"
