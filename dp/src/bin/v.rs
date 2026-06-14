@@ -18,11 +18,10 @@ fn main() {
     let mut parent = vec![usize::MAX; n];
     let mut order = Vec::with_capacity(n);
 
-
     // 木を root = 0 で根付木にする
     // ------------------------------
     parent[root] = root;
-    let mut stack =vec![root];
+    let mut stack = vec![root];
 
     while let Some(v) = stack.pop() {
         order.push(v);
@@ -34,7 +33,6 @@ fn main() {
             }
         }
     }
-
 
     // down[v]
     // vからみて子側だけを使って、v を含む連結な黒集合を作る通りの数
@@ -53,11 +51,11 @@ fn main() {
     // up[v]
     // vからみて親側を使って、v に接続できる黒い連結部分の通り数
     // ------------------------------
-    let mut up = vec![0; n];   // root には親側がないので 0 で初期化
+    let mut up = vec![0; n]; // root には親側がないので 0 で初期化
     let mut ans = vec![0; n];
 
     for &v in &order {
-        let deg = graph[v].len();  // 頂点 v に隣接する頂点の数
+        let deg = graph[v].len(); // 頂点 v に隣接する頂点の数
 
         // vals[i] = graph[v][i] 方向から v に来る contribution
         let mut vals = vec![0; deg];
@@ -65,9 +63,9 @@ fn main() {
         for i in 0..deg {
             let to = graph[v][i];
             vals[i] = if to == parent[v] && v != root {
-                up[v]    // 親方向から来る値
+                up[v] // 親方向から来る値
             } else {
-                down[to]  // 子方向から来る値
+                down[to] // 子方向から来る値
             }
         }
 
@@ -82,7 +80,7 @@ fn main() {
         for i in (0..deg).rev() {
             suffix[i] = suffix[i + 1] * ((vals[i] + 1) % m) % m;
         }
-        
+
         // v を黒にする通りの数
         ans[v] = prefix[deg];
 
@@ -92,7 +90,7 @@ fn main() {
             if parent[to] == v {
                 // to 方向だけを除いた積
                 // これは contribution[v -> to] になる
-                up[to] =prefix[i] * suffix[i + 1] % m;
+                up[to] = prefix[i] * suffix[i + 1] % m;
             }
         }
     }
