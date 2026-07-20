@@ -1,26 +1,22 @@
-#[allow(unused_imports)]
-use itertools::{iproduct, Itertools};
-#[allow(unused_imports)]
-use num_traits::pow;
-#[allow(unused_imports)]
-use proconio::{
-    fastout, input,
-    marker::{Chars, Usize1},
-};
-#[allow(unused_imports)]
-use std::cmp::{max, min};
-#[allow(unused_imports)]
-use std::collections::{HashMap, HashSet, VecDeque};
-#[allow(unused_imports)]
-use std::iter::FromIterator;
+use proconio::{fastout, input};
+use std::cmp::min;
 
 #[fastout]
 fn main() {
-    input!{
-        h: usize, w: usize,
-        s: [Chars; h],
-        mut plan: [(usize, usize, usize); h]
+    input! {
+        n: usize, k: usize,
+        h: [isize; n],
     };
 
-    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
+    let mut dp = vec![isize::MAX; n];
+
+    dp[0] = 0;
+
+    for i in 1..n {
+        for j in 1..=min(k, i) {
+            dp[i] = min(dp[i], dp[i - j] + (h[i] - h[i - j]).abs());
+        }
+    }
+
+    println!("{:?}", dp[n - 1]);
 }

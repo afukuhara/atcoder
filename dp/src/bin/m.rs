@@ -16,7 +16,7 @@ use std::iter::FromIterator;
 
 #[fastout]
 fn main() {
-    input!{
+    input! {
         h: usize, w: usize,
         s: [Chars; h],
         mut plan: [(usize, usize, usize); h]
