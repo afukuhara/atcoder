@@ -1,22 +1,27 @@
-use proconio::{fastout, input};
-use std::cmp::min;
+#[allow(unused_imports)]
+use itertools::{iproduct, Itertools};
+#[allow(unused_imports)]
+use num_traits::pow;
+#[allow(unused_imports)]
+use proconio::{
+    fastout, input,
+    marker::{Chars, Usize1},
+};
+#[allow(unused_imports)]
+use std::cmp::{max, min};
+#[allow(unused_imports)]
+use std::collections::{HashMap, HashSet, VecDeque};
+#[allow(unused_imports)]
+use std::iter::FromIterator;
 
 #[fastout]
 fn main() {
-    input! {
-        n: usize,
-        h: [i32; n]
+    input!{
+        h: usize, w: usize,
+        s: [Chars; h],
+        mut plan: [(usize, usize, usize); h]
     };
 
-    let mut dp = vec![0; n];
-    dp[0] = 0;
-    dp[1] = (h[1] - h[0]).abs();
-    for i in 2..n {
-        dp[i] = min(
-            dp[i - 1] + (h[i] - h[i - 1]).abs(),
-            dp[i - 2] + (h[i] - h[i - 2]).abs(),
-        );
-    }
-
-    println!("{}", dp[n - 1]);
+    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
 }
+d

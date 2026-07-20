@@ -1,36 +1,26 @@
-use proconio::{fastout, input};
-
-const MOD: usize = 1_000_000_007;
+#[allow(unused_imports)]
+use itertools::{iproduct, Itertools};
+#[allow(unused_imports)]
+use num_traits::pow;
+#[allow(unused_imports)]
+use proconio::{
+    fastout, input,
+    marker::{Chars, Usize1},
+};
+#[allow(unused_imports)]
+use std::cmp::{max, min};
+#[allow(unused_imports)]
+use std::collections::{HashMap, HashSet, VecDeque};
+#[allow(unused_imports)]
+use std::iter::FromIterator;
 
 #[fastout]
 fn main() {
-    input! {
-        n: usize, s: String
+    input!{
+        h: usize, w: usize,
+        s: [Chars; h],
+        mut plan: [(usize, usize, usize); h]
     };
 
-    let s = s.chars().collect::<Vec<char>>();
-
-    let mut dp = vec![vec![0; n + 1]; n + 1];
-    dp[1][0] = 1;
-
-    for i in 1..n {
-        if s[i - 1] == '<' {
-            let mut sumv = 0;
-            for j in 0..=i {
-                dp[i + 1][j] = sumv;
-                sumv += dp[i][j];
-                sumv %= MOD;
-            }
-        } else {
-            let mut sumv = 0;
-            for j in (0..i).rev() {
-                sumv += dp[i][j];
-                sumv %= MOD;
-                dp[i + 1][j] = sumv;
-            }
-        }
-    }
-
-    let ans = dp[n][0..n].iter().sum::<usize>() % MOD;
-    println!("{}", ans);
+    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
 }

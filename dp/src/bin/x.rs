@@ -1,29 +1,26 @@
-use itertools::Itertools;
-use proconio::{fastout, input};
+#[allow(unused_imports)]
+use itertools::{iproduct, Itertools};
+#[allow(unused_imports)]
+use num_traits::pow;
+#[allow(unused_imports)]
+use proconio::{
+    fastout, input,
+    marker::{Chars, Usize1},
+};
+#[allow(unused_imports)]
+use std::cmp::{max, min};
+#[allow(unused_imports)]
+use std::collections::{HashMap, HashSet, VecDeque};
+#[allow(unused_imports)]
+use std::iter::FromIterator;
 
 #[fastout]
 fn main() {
-    input! {
-        n: usize,
-        blocks: [(usize, usize, usize); n]
+    input!{
+        h: usize, w: usize,
+        s: [Chars; h],
+        mut plan: [(usize, usize, usize); h]
     };
 
-    let limit = 20000;
-
-    let mut dp = vec![(0, 0); limit + 1];
-    for (w, s, v) in blocks
-        .iter()
-        .sorted_by_key(|(weight, strength, _)| *weight + *strength)
-    {
-        for weight in (0..=limit).rev() {
-            let (_, value) = dp[weight];
-            let new_weight = weight + *w;
-            let new_value = value + *v;
-            if *s >= weight && dp[new_weight].1 < new_value {
-                dp[new_weight] = (*s, new_value);
-            }
-        }
-    }
-
-    println!("{}", dp.iter().map(|(_, value)| value).max().unwrap());
+    println!("{:?} {:?} {:?} {:?}", h, w, s, plan);
 }
